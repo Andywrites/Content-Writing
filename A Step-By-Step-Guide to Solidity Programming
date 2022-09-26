@@ -1,0 +1,144 @@
+
+Step by Step Guide for Solidity Development
+Using Data Types in Solidity
+Writing a Function that Accepts a Token
+Creating a Fallback Function in Solidity
+Events in Solidity
+Using Multiple Smart Contracts in Solidity
+Inheriting Smart Contracts
+Libraries and Math in Solidity
+We Can Help You Build All Kinds of Applications in Solidity
+Conclusion
+
+
+Step by Step Guide for Solidity Development
+
+Solidity is the main programming language for writing smart contracts on the Ethereum blockchain, and it is a contract-oriented language that implies that smart contracts are the way you write your code and store the logic. It is a high-level language similar to Javascript, Python, and C++, and it is statically typed, and support libraries, inheritance, and a lot more. 
+
+You can write Solidity code in Remix, a browser IDE that lets you create smart contracts without setting up a local environment on your computer. To write a smart contract in Solidity, we first need to declare the version of Solidity we want to use in a new file by selecting the file icon on the left side of Remix. Smart contracts look like a class because of the way we keep the code in the IDE. In our first piece of code, we shall be writing a smart contract by creating the contract, declaring the data type, creating a function to get the value, setting the default value using a constructor, and writing a function that allows us to set that value to a new value. 
+
+If you are using newer versions of Solidity, you will get an error message if you set your constructor function to public. The exact error you will get will tell you that you have ignored the visibility of your constructor. Solidity does not require setting of visibility in the current version ^0.8.17. 
+
+Another error you may encounter is the data location error, Solidity allows you set calldata or memory for return data in the IDE. To fix this, simply set the second instance of string to memory and avoid putting string in the first bracket. 
+
+The correct version of the code should be as shown in the first image below. You can then move on to compile your code by clicking on the compile tab marked in the second image. Click on the get value and you will see myValue displayed under the deployed contract dropdown in Solidity in the set value bar, you can input any value you like, set that value, and the get value button will give you the value you have imputed. Your first basic smart contract is set.
+
+
+Using Data Types in Solidity
+
+In our previous code, we created a function with default, set, and get possibilities. We can edit that code further by removing the get function and setting the string to public. If we do this, compile, and deploy the code you will notice that we get the same result where we can set any value as value, and get the same after deploying the smart contract. The same happens if you delete the constructor and set the value of the public string to myValue. If you do not want the user to have the ability to set the value, you can remove the set function and add constant to the string declaration. 
+
+Just as you wrote the string, setting the visibility to public, and giving it a name, you can also write a boolean which can either be true or false. There are also data types known as integers which can be written as int or uint. The int translates to a signed integer which can hold a positive or negative value, while a uint can only hold a positive value and it means an unsigned integer. You can also set the number of bits such as 8 which is 1 bytes, and 256 bits which is 32 bytes. 
+
+
+The next data type we shall look at is an enumerated list written as an enum. It allows us to keep track of a list of states in the smart contract. You can write enums such as waiting, ready, and active, to tell you when there are changes to the state of the smart contract. We can activate each state we just created using a function and setting the return to be a boolean value which can either be true or false. To achieve this we must establish the default state using a constructor, activate the state, and then check the code by deploying the new smart contract. You should be able to check the state of the smart contract to see whether it is active or not from the deployed contract output on Remix IDE. 
+
+
+
+The next concept we will look at is structs which help you find your own data structures inside solidity. Structs must have their own characteristics such as the first name and the last name of a person defined by struct. Compiling and deploying the smart contract will give you a result like you have in the image below. 
+
+If you input your name or any string in the addPerson button, you would see it displayed when you click on people. If you reference 0 in the people button, it will show you your input, but it cannot show anything aside from that. If you input 1 in people, for example, you will get an error. 
+
+To solve this problem we must tell Solidity how to keep an internal count of people by adding uint256 peopleCount, and peopleCount += 1 to our function. Doing this will help Solidity know that if we add multiple strings in addPerson, we can fetch the position of each starting from 0 to 32 and more. 
+
+
+You can do the same thing using mapping which functions like an associative array. Mapping takes key-value pairs to achieve the same result as structs. The uint is the ID and the Person is the record that we get when we run our code. We also need to restructure the order of the function so that everything works perfectly as shown in the image below. 
+
+
+
+We are now going to look at modifiers. You can use modifiers to set the visibility of a function in your smart contract. In our previous examples we set our function to public which means that anyone could see and call the function outside the contract. 
+
+Using the same piece of code, we can add an incrementCount function and move peopleCount +=1; below the function to get the same result but our incrementCount function will be invisible. We can set the owner to be the sole modifier of the data using an address, a datatype for account in Solidity. We can use a global keyword known as msg to tell us the account that can call the function. 
+
+We can trigger an error if the person trying to initiate the transaction is not the owner using the require modifier. If the owner is the actual owner, then the transaction will pass, but if the owner is not the owner, then the code will return an error. To do this we write an address equals owner to define the identifier, then we create a constructor which established the default owner. The compiled code looks like this in Solidity.
+
+
+
+
+We can also handle time in Solidity using a while and epoh time modifier. Set the required blocktime to he greater than or equal to the opening time, then set the modifier to be only while opened, then create an unsigned integer called opening time, and set it to the current epoch. If the current epoch is greater that the time you compiled and deployed your code, the code should work perfectly as shown below.
+
+
+
+
+
+
+
+Writing a Function that Accepts a Token
+First, we create a buy token function then call the buy token, and send Ether to the wallet so that when someone calls the function they are going to send Ether, and we will issue them a token and the wallet will receive the Ether they sent. 
+
+We are going to use mapping and set the address as an unsigned integer, then create balances and use msg.sender to define the account calling the function. Then we will transfer the funds sent into our receiving wallet, by tracking the address and defining the transfer of funds sent in from the function. 
+
+We can use another property of msg called value to know the amount of Ether sent by the person. There will be some errors but in the end, it will all be resolved. Then we make the buyToken function public, then add a payable modifier to accept Ether to the account. Solidity requires explicitness when defining these sort of functions. 
+
+Create a constructor and set the address payable in the parenthesis, then make sure the address payable wallet comes after the mapping argument. To send Ether into the wallet, we need to change the value in Remix from Wei to Ether, then change the 0 in the value tab to the number of Ether you want to send. You will notice that your test Ether will increase on the deployed account, and reduce on the default account which shows that your smart contract is working perfectly. 
+
+
+
+Creating a Fallback Function in Solidity
+
+A fallback function is a default function that you can wrap the by token function in so that whenever you send token to the smart contract, it buys the token for you. The fallback function is what is used in most ICOs that allows users to contribute a predefined token, and receive the new tokens of the project in return. 
+
+To implement it we write a function and set the view of the function to external. In older versions of Solidity, the fallback function can simply be implemented using the function(), but recent versions only support fallback() which must be followed by an appropriate receive() function. To test this you can set the deploy address like before, add a value, and use the fallback to send the Ether to an initial address. Notice the change in the Ether balance. 
+
+
+
+Events in Solidity
+
+Events help you listen for certain activities in smart contracts. You can set an event to listen for multiple activities or a single activity in a contract. You can check the result transaction log to see the event showing the buyer and the amount of Ether. When building an application that interacts with the smart contract, you can use event to wait for a process to finish and reload your application when the event is triggered. You can also use events to see all the transactions that have ever happened in the smart contracts.
+
+
+
+
+Using Multiple Smart Contracts in Solidity
+
+Using the smart contract we have been working on as the basis, we can write parent-child relationships or inheritance in smart contracts. We are still going to buy a token, but instead of just writing my contract, we are going to add ERC20Token, and set the string to public and name, then under mapping, we can paste the balances we used before. We also need to call a public mint function and increment the msg function. 
+
+We will also set a string variable that keeps track of the name, and then extract the balances to a separate function called mint. The mint function will be public. Then we simplify the buyToken argument and mint it inside the contract. 
+To tell the second contract that we need to mint tokens from the first contract, we need to know the address where the first contract is deployed. Then we can refer to the second smart contact with the address and call the mint function on it. 
+
+To deploy the contract, we first deploy the ERC20 smart contract, and then copy the address from the deployed smart contract log. Use the address as the second address in the deploy button bar for myContract, then paste the second address as the second address value in strings. After deploying, you can call the buyToken function, and click on mint in the first contract to see the result. 
+
+
+
+Inheriting Smart Contracts
+
+To make a smart contract inherit another smart contract, we need to set the second contract as ERC20Token using “is”, then we can customize the token by overwriting the name, thus setting the default name to myToken. 
+
+We can set the name using a constructor function to take the name and set it to a variable. We can also inherit the value instead of storing it using constructor string name. Doing this will help us accept our argument into a constructor, and still take the constructor parameter from the main contract. 
+
+Implementing the following code will call the mint function from the parent contract to update the balances, then increment the number of token owners, then add them to the array of owners. 
+
+
+
+Libraries and Math in Solidity
+
+Libraries are sometimes used to manage math functions in Solidity. By itself, libraries are used to set up codes for reuse in Solidity. When programmers use libraries, they often associate it with don’t repeat yourself (//DRY). 
+
+If there is a function you want to use in multiple smart contracts, you can declare that function in a library by using the library keyword. The library keyword allows you to define functions, store variable, and do a lot more, but they do not have the full behavior of a smart contract such as storage and inheritance. In the code snippet below, we use a library to stop an impossible division such as dividing an integer by zero, by requiring that the input is greater than zero. If you set a divisible value such as 144 for a and 12 for b, you should get an answer of 144 as we did in the console below.
+
+
+
+You can also copy the file into a separate folder, and import the file into a new file on your Remix IDE. It performs the same function, and that is how you import a library in Solidity. There is also a library by Open Zapellin known as SafeMath that you would need to implement lots of functionalities in Solidity. You can import this library from the Github repository provided by Open Zapellin. 
+
+We Can Help You Build All Kinds of Applications in Solidity
+
+Feel free to reach out if you want to work with a Solidity developer to build your dream project in Web3. We know just how complicated it can be yet our mastery and experience in backend, frontend, and everything related to full-stack solidity development sets us apart in delivery and project implementation. We have helped hundreds of projects with Solidity programming, auditing, and development solutions over the years, and their results in the space affirm our expertise and skill. 
+
+There are also other benefits of working with us such as a standby team in case of future upgrades and integrations, and a dedicated Solidity developer for all aspects of your project. We separate multiple aspects of project development to capture the most elusive details and deliver the brightest and most impressive solutions. Our auditing and all-around approach to smart contract deployment are respected and applauded by those we have worked with. 
+
+Conclusion
+
+Most of the DeFi projects you see out there were written in Solidity, since Ethereum houses the biggest protocols in the DeFi and cryptocurrency space to this day. If you have mastered JavaScript, or C++ you would easily pick up the programming language, and this article could be a great place to start your journey. 
+
+There are also other blockchains like Binance Smart Chain, and Polygon that support Solidity, and even though other development languages like Vyper have been ignored for so long, there is a growing community working to develop these and increase adoption much like Python. We hope to see you whenever you decide to build your next DeFi project, but until then, keep enjoying Solidity.
+
+
+
+
+
+
+
+
+
+
+ 
